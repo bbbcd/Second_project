@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>欢迎进入注册</h3>
+        <form action="" onsubmit="return check()">
+            <div class="form-group">
+                <label for="">用户名</label>
+                <input type="text" name="u_name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">手机号码</label>
+                <input type="number" name="mobile" class="form-control">
+            </div>
+            <div class="form-group"> 
+                <label for="">密码</label>
+                <input type="text" name="pwd" onkeyup="this.value=this.value.replace(/[^_a-zA-Z0-9]/g,'')"  class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">重复密码</label>
+                <input type="text" name="rpwd" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success btn-block">
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        function check(){
+            var u_name=document.querySelector('[name="u_name"]').value
+            var mobile=document.querySelector('[name="mobile"]').value
+            var pwd=document.querySelector('[name="pwd"]').value
+            var rpwd=document.querySelector('[name="rpwd"]').value
+            // 1开头，11位
+			// 
+			// 一种写法
+			// /表达式规则/.test(字符串)
+			//   ^ 匹配以什么开头
+			//   10位数字（\d）
+			//   位数{10}
+			//   $ 匹配结束
+            if(u_name.length<3){
+                alert('用户名不能少于3位')
+                return false;
+            }else if(!/^1\d{10}$/.test(mobile)){
+                alert('手机号码格式不正确')
+                return false;
+            }else if(pwd.length <6){
+                alert('密码不能少于六个字符')
+                return false;
+            }else if(pwd !=rpwd ||  pwd ==''){
+                alert('两次密码输入不一致');
+                return false;
+            }else{
+                // jQuery的ajax
+				// get方法
+				// 第一个参数：请求的url接口地址
+				// 第二个参数：后台的值 object
+				// 第三个参数：回调函数，接收后台响应回来的数据
+
+                $.get('doreg.php',{u_name,mobile,pwd},function(res){
+                    alert('注册成功')
+                    console.log(res);
+                })
+                return false
+            }
+        }
+
+        // ajax 局部数据交互，无需刷新页面
+    </script>
+</body>
+</html>

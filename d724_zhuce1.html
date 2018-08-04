@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>京东生鲜 - 欢迎注册</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+	<div class="container">
+		<h3>大佬欢迎你</h3>
+		<!-- onsubmit="return false" 阻止表单提交 -->
+		<form   class="form"  >
+			<div class="form-group">
+				<label >用户名</label>
+				<input name="u_name" required="" type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label >手机号码</label>
+				<input name="mobile" required=""  type="number" class="form-control">
+			</div>
+			<div class="form-group">
+				<label >头像</label>
+				<input name="head_pic" required=""  type="file" class="form-control">
+			</div>
+			<div class="form-group">
+				<label >密码</label>
+				<input name="pwd" required=""  type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label >重复密码</label>
+				<input name="rpwd" required=""  type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<input type="button" class="btn btn-success btn-block" onclick="check()">
+			</div>
+		</form>
+
+	</div>
+	<script type="text/javascript">
+
+		function check() {
+			// 用户名长度大于3位
+			var u_name = document.querySelector('[name="u_name"]').value
+
+			var mobile = document.querySelector('[name="mobile"]').value
+
+			var pwd = document.querySelector('[name="pwd"]').value
+
+			var rpwd = document.querySelector('[name="rpwd"]').value
+			// 1开头，11位
+			// 
+			// 一种写法
+			// /表达式规则/.test(字符串)
+			//   ^ 匹配以什么开头
+			//   10位数字（\d）
+			//   位数{10}
+			//   $ 匹配结束
+			// if (u_name.length<3) {
+			// 	alert('用户名不能少于3位')
+			// 	return false
+			// }else if(!/^1\d{10}$/.test(mobile)){
+			// 	alert('手机号码格式不正确')
+			// 	return false
+			// }else if(pwd != rpwd || pwd==''){
+			// 	alert('密码和确认密码不一致')
+			// 	return false
+			// }else{
+			// 传文件时候用FormData
+				var formData = new FormData()
+				formData.append('u_name',u_name)
+				formData.append('pwd',pwd)
+				formData.append('mobile',mobile)
+
+			// 获取文件内容，以下代码
+				var head_pic = document.querySelector('[name="head_pic"]').files[0]
+                console.log(head_pic);
+				formData.append('head_pic',head_pic)
+
+				// wx.request api
+				$.ajax({
+					url:'doreg1.php',
+					type:'post',
+					processData:false,//不让底层转换传输的内容格式
+					contentType:false,//一定要同步变为false
+					data:formData,
+					success:function (res) {
+						console.log(res)
+					}
+				})
+				return false
+			// }
+		}
+		// ajax 局部数据交互，无需刷新页面
+		
+
+		// css  dw，弹出框，直接输入外边距边框
+	</script>
+</body>
+</html>
